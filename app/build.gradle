@@ -1,0 +1,53 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.ndtlg.pettimenew"
+        minSdkVersion 19
+        targetSdkVersion 23
+        versionCode 55
+        versionName "1.0"
+        multiDexEnabled = true
+        jackOptions { // DEPRECATED
+            enabled true
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    signingConfigs {
+        debug {
+            storeFile file("D:\\小工具\\ntdlg.keystore")
+            storePassword "ntdlg123"
+            keyAlias "20"
+            keyPassword "ntdlg123"
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    aaptOptions {
+        cruncherEnabled = false
+        useNewCruncher = false
+
+    }
+    lintOptions {
+        abortOnError false
+        checkReleaseBuilds false
+        // 防止在发布的时候出现因MissingTranslation导致Build Failed!
+        disable 'MissingTranslation'
+    }
+}
+
+dependencies {
+    compile project(':frameWidget')
+    compile('com.aliyun.alink.linksdk:iot-linkkit:1.6.2')
+    compile 'com.pgyersdk:sdk:2.8.1'
+}

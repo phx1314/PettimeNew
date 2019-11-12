@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/mLinearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+               >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/mLinearLayout_cnm"
+                        android:layout_width="@dimen/j230dp"
+                        android:layout_height="@dimen/j230dp"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/j15dp"
+                        android:background="@drawable/blue"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/j50dp"
+                        android:paddingRight="@dimen/j50dp"
+                        android:paddingTop="@dimen/j40dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_style_15_black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="设定温度" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/j5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/mImageView_left"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/left" />
+
+                                <TextView
+                                    android:id="@+id/mTextView2"
+                                    style="@style/text_style_15_black"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/j10dp"
+                                    android:layout_marginRight="@dimen/j10dp"
+                                    android:singleLine="true"
+                                    android:text="0℃"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/mImageView_right"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/right" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/mTextView1"
+                            style="@style/text_style_15_black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j40dp"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="当前温度:0℃" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/mImageView_change"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="@dimen/j15dp"
+                        android:src="@drawable/change_blue" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/mImageView_del"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/minus" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/j25dp"
+                        android:layout_marginRight="@dimen/j25dp"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mTextView3"
+                            style="@style/text_style_15_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j5dp"
+                            android:text="1"
+                            android:textSize="30sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            style="@style/text_style_15_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="MIN" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/mImageView_add"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/plus" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/mProgressBar"
+                    style="@style/progressBarHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/j10dp"
+                    android:layout_marginRight="@dimen/j10dp"
+                    android:layout_marginTop="@dimen/j8dp"
+                    android:max="100"
+                    android:thumb="@drawable/close_07" />
+
+                <SeekBar
+                    android:id="@+id/mProgressBar_nv"
+                    style="@style/progressBarHorizontalnv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/j10dp"
+                    android:layout_marginRight="@dimen/j10dp"
+                    android:layout_marginTop="@dimen/j8dp"
+                    android:max="100"
+                    android:thumb="@drawable/close_07_red" />
+
+                <TextView
+                    android:id="@+id/mTextView_hx"
+                    style="@style/text_style_15_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/j5dp"
+                    android:gravity="center"
+                    android:text="烘箱模式" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/j8dp"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/j25dp"
+                    android:paddingRight="@dimen/j25dp">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mTextView_jr"
+                            style="@style/text_style_15_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/j5dp"
+                            android:drawableTop="@drawable/heat"
+                            android:gravity="center"
+                            android:text="烘干" />
+
+                        <TextView
+                            android:id="@+id/mTextView_hgcao"
+                            style="@style/text_style_13_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j8dp"
+                            android:background="@drawable/shape_blue"
+                            android:padding="@dimen/j5dp"
+                            android:text="ON" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mTextView_sj"
+                            style="@style/text_style_15_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/j5dp"
+                            android:drawableTop="@drawable/sterilize"
+                            android:gravity="center"
+                            android:text="消毒" />
+
+                        <TextView
+                            android:id="@+id/mTextView_xdcao"
+                            style="@style/text_style_13_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j8dp"
+                            android:background="@drawable/shape_blue"
+                            android:padding="@dimen/j5dp"
+                            android:text="ON" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/mTextView_version"
+                    style="@style/text_style_11_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/j8dp"
+                    android:layout_marginTop="@dimen/j8dp"
+                    android:gravity="center"
+                    android:text="1.0.1" />
+
+                <TextView
+                    android:id="@+id/mTextView_update"
+                    style="@style/text_style_11_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/j8dp"
+                    android:text="检查更新" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/mRelativeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <RelativeLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:id="@+id/mLinearLayout_gg"
+                        android:layout_width="@dimen/j230dp"
+                        android:layout_height="@dimen/j230dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginTop="@dimen/j15dp"
+                        android:background="@drawable/close_blue"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/j50dp"
+                        android:paddingRight="@dimen/j50dp"
+                        android:paddingTop="@dimen/j40dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_style_15_black"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="设定温度" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/j5dp"
+                                android:gravity="center"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/mImageView_left2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/left" />
+
+                                <TextView
+                                    android:id="@+id/mTextView_2"
+                                    style="@style/text_style_15_black"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/j10dp"
+                                    android:layout_marginRight="@dimen/j10dp"
+                                    android:singleLine="true"
+                                    android:text="0℃"
+                                    android:textSize="30sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:id="@+id/mImageView_right2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:src="@drawable/right" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <TextView
+                            android:id="@+id/mTextView_1"
+                            style="@style/text_style_15_black"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j40dp"
+                            android:gravity="center"
+                            android:singleLine="true"
+                            android:text="当前温度:0℃" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/mImageView_change2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_margin="@dimen/j15dp"
+                        android:src="@drawable/change_blue" />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical">
+
+                    <SeekBar
+                        android:id="@+id/mProgressBar2"
+                        style="@style/progressBarHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/j10dp"
+                        android:layout_marginRight="@dimen/j10dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:thumb="@drawable/close_07" />
+
+                    <SeekBar
+                        android:id="@+id/mProgressBar2_nv"
+                        style="@style/progressBarHorizontalnv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/j10dp"
+                        android:layout_marginRight="@dimen/j10dp"
+                        android:max="100"
+                        android:progress="50"
+                        android:thumb="@drawable/close_07_red" />
+
+                    <TextView
+                        android:id="@+id/mTextView_lnw"
+                        style="@style/text_style_15_black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/j5dp"
+                        android:drawablePadding="@dimen/j5dp"
+                        android:drawableTop="@drawable/open_blue"
+                        android:gravity="center"
+                        android:text="照明" />
+
+                    <TextView
+                        android:id="@+id/mTextView_zmcao"
+                        style="@style/text_style_13_white"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/j8dp"
+                        android:background="@drawable/shape_blue"
+                        android:padding="@dimen/j5dp"
+                        android:text="ON" />
+
+                    <TextView
+                        android:id="@+id/mTextView_lnw2"
+                        style="@style/text_style_15_black"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/j15dp"
+                        android:gravity="center"
+                        android:text="冷暖窝模式" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <ImageView
+        android:id="@+id/mImageView_zc"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80ffffff" />
+</RelativeLayout>
+

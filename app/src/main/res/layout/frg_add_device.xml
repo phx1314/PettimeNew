@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/mScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            android:src="@drawable/cnm" />
+    </ScrollView>
+
+
+    <TextView
+        style="@style/text_style_17_black"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/j10dp"
+        android:layout_marginTop="90dp"
+        android:text="请输入WIFI密码" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/j15dp">
+
+        <TextView
+            style="@style/text_style_15_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号" />
+
+        <TextView
+            android:id="@+id/mTextView_name"
+            style="@style/text_style_15_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/j15dp"
+            android:text="账号" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/j15dp">
+
+        <TextView
+            style="@style/text_style_15_black"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="密码" />
+
+        <EditText
+            android:id="@+id/mEditText"
+            style="@style/text_style_15_black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/j15dp"
+            android:layout_marginRight="@dimen/j15dp"
+            android:background="@drawable/bg_con_02"
+            android:padding="@dimen/j3dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <TextView
+        android:id="@+id/mTextView_sure"
+        style="@style/text_style_17_white"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:background="#4768F3"
+        android:gravity="center"
+        android:padding="@dimen/j12dp"
+        android:text="确定" />
+</LinearLayout>
+
