@@ -85,7 +85,8 @@
             android:paddingBottom="@dimen/j6dp"
             android:paddingLeft="@dimen/j10dp"
             android:paddingRight="@dimen/j10dp"
-            android:paddingTop="@dimen/j6dp">
+            android:paddingTop="@dimen/j6dp"
+            android:visibility="gone">
 
             <TextView
                 style="@style/text_style_15_black"
@@ -109,7 +110,8 @@
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/j50dp"
-            android:background="@color/gray_pressed" />
+            android:background="@color/gray_pressed"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/mLinearLayout_qq"
@@ -121,7 +123,8 @@
             android:paddingBottom="@dimen/j6dp"
             android:paddingLeft="@dimen/j10dp"
             android:paddingRight="@dimen/j10dp"
-            android:paddingTop="@dimen/j6dp">
+            android:paddingTop="@dimen/j6dp"
+            android:visibility="gone">
 
             <TextView
                 style="@style/text_style_15_black"
@@ -140,12 +143,14 @@
                 android:layout_height="wrap_content"
                 android:text="绑定" />
         </LinearLayout>
+
         <ImageView
             android:id="@+id/mImageView_phone"
             android:layout_width="match_parent"
             android:layout_height="1px"
             android:layout_marginLeft="@dimen/j50dp"
-            android:background="@color/gray_pressed" />
+            android:background="@color/gray_pressed"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/mLinearLayout_phone"
@@ -154,11 +159,11 @@
             android:background="#fff"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:visibility="gone"
             android:paddingBottom="@dimen/j6dp"
             android:paddingLeft="@dimen/j10dp"
             android:paddingRight="@dimen/j10dp"
-            android:paddingTop="@dimen/j6dp">
+            android:paddingTop="@dimen/j6dp"
+            android:visibility="gone">
 
             <TextView
                 style="@style/text_style_15_black"
@@ -176,10 +181,12 @@
                 android:layout_height="wrap_content"
                 android:text="绑定" />
         </LinearLayout>
+
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="1px"
-            android:background="@color/gray_pressed" />
+            android:background="@color/gray_pressed"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/mTextView_logout"

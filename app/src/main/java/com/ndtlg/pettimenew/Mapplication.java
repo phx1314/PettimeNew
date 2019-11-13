@@ -22,19 +22,19 @@ public class Mapplication extends Application {
                 this));
     }
 
-    {
-
-        com.framewidget.F.APPNAME = "";
-        com.framewidget.F.WEIXINID = "wx69d1fa92fe46fbe5";
-        com.framewidget.F.WEIXINSEC = "c9e24b2f75386c391b475aee73a1fbb3";
-        com.framewidget.F.QQID = "1108315216";
-        com.framewidget.F.QQSEC = "WXrhuuGLt8BziVfX";
-        // 微信 wx12342956d1cab4f9,a5ae111de7d9ea137e88a5e02c07c94d
-        PlatformConfig.setWeixin(com.framewidget.F.WEIXINID,
-                com.framewidget.F.WEIXINSEC);
-        PlatformConfig.setQQZone(com.framewidget.F.QQID,
-                com.framewidget.F.QQSEC);
-    }
+//    {
+//
+//        com.framewidget.F.APPNAME = "";
+//        com.framewidget.F.WEIXINID = "wx69d1fa92fe46fbe5";
+//        com.framewidget.F.WEIXINSEC = "c9e24b2f75386c391b475aee73a1fbb3";
+//        com.framewidget.F.QQID = "1108315216";
+//        com.framewidget.F.QQSEC = "WXrhuuGLt8BziVfX";
+//        // 微信 wx12342956d1cab4f9,a5ae111de7d9ea137e88a5e02c07c94d
+//        PlatformConfig.setWeixin(com.framewidget.F.WEIXINID,
+//                com.framewidget.F.WEIXINSEC);
+//        PlatformConfig.setQQZone(com.framewidget.F.QQID,
+//                com.framewidget.F.QQSEC);
+//    }
 
     @Override
     protected void attachBaseContext(Context base) {

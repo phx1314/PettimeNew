@@ -125,11 +125,11 @@
                 <TextView
                     android:id="@+id/mTextView_wj"
                     style="@style/text_style_13_white"
-                    android:layout_marginTop="@dimen/j2dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/j40dp"
                     android:layout_marginRight="@dimen/j40dp"
+                    android:layout_marginTop="@dimen/j2dp"
                     android:gravity="center"
                     android:padding="@dimen/j8dp"
                     android:text="忘记密码"
@@ -143,7 +143,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -173,7 +174,8 @@
                     android:layout_marginLeft="@dimen/j20dp"
                     android:layout_marginRight="@dimen/j20dp"
                     android:layout_marginTop="@dimen/j10dp"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageButton
                         android:id="@+id/ImageButton_qq"

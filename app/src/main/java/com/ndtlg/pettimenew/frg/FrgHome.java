@@ -105,9 +105,9 @@ public class FrgHome extends BaseFrg {
         mSlidingFragment.addContentView(new FrgWd(), getResources().getString(com.framewidget.R.string.fa_user), 0);
         mSlidingFragment.setOffscreenPageLimit(2);
 
-        if (!TextUtils.isEmpty(type_wxqq)) {
-            Helper.startActivity(getContext(), FrgForget.class, TitleAct.class, "title", "绑定手机号", "type", "3", "type_wxqq", type_wxqq);
-        }
+//        if (!TextUtils.isEmpty(type_wxqq)) {
+//            Helper.startActivity(getContext(), FrgForget.class, TitleAct.class, "title", "绑定手机号", "type", "3", "type_wxqq", type_wxqq);
+//        }
     }
 
 
