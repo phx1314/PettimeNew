@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Base
     appid="appid"
-    baseuri="https://iot.pettime.info:8443"
+    baseuri="http://iot.myrabbit.vip"
     temppath="pet"
     updateuri=""
     usesdcard="true">
