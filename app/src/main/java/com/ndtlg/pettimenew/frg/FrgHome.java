@@ -101,8 +101,10 @@ public class FrgHome extends BaseFrg {
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
 
-        mSlidingFragment.addContentView(new FrgMain(), getResources().getString(com.framewidget.R.string.fa_home), 0);
-        mSlidingFragment.addContentView(new FrgWd(), getResources().getString(com.framewidget.R.string.fa_user), 0);
+//        mSlidingFragment.addContentView(new FrgMain(), getResources().getString(com.framewidget.R.string.fa_home), 0);
+//        mSlidingFragment.addContentView(new FrgWd(), getResources().getString(com.framewidget.R.string.fa_user), 0);
+        mSlidingFragment.addContentView(new FrgMain(),"首页", R.drawable.btn_checked_1);
+        mSlidingFragment.addContentView(new FrgWd(), "我的", R.drawable.btn_checked_2);
         mSlidingFragment.setOffscreenPageLimit(2);
 
 //        if (!TextUtils.isEmpty(type_wxqq)) {

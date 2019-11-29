@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/j20dp"
+        android:background="@drawable/bg_shebeibeijing"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text_style_17_black"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/j44dp"
+            android:gravity="center"
+            android:text="设备连接" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/tyD1" />
+
+        <TextView
+            style="@style/text_style_17_black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/j10dp"
+            android:layout_marginTop="10dp"
+            android:text="请输入WIFI密码" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/j15dp">
+
+            <TextView
+                style="@style/text_style_15_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="账号" />
+
+            <TextView
+                android:id="@+id/mTextView_name"
+                style="@style/text_style_15_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/j15dp"
+                android:text="账号" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/j15dp">
+
+            <TextView
+                style="@style/text_style_15_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="密码" />
+
+            <EditText
+                android:id="@+id/mEditText"
+                style="@style/text_style_15_black"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/j15dp"
+                android:layout_marginRight="@dimen/j15dp"
+                android:background="@drawable/bg_mimashuruk"
+                android:hint="请输入密码"
+                android:padding="@dimen/j5dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="@dimen/j10dp"
+            android:background="@color/tyD1" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/j44dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/mTextView_cancle"
+                style="@style/text_style_15_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消" />
+
+            <TextView
+                android:id="@+id/mTextView_sure"
+                style="@style/text_style_15_gray"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="#4fa1ff" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
+

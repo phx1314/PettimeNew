@@ -13,6 +13,7 @@ package com.ndtlg.pettimenew.item;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,7 +26,10 @@ import com.mdx.framework.activity.TitleAct;
 import com.mdx.framework.utility.Helper;
 import com.ndtlg.pettimenew.F;
 import com.ndtlg.pettimenew.R;
+import com.ndtlg.pettimenew.act.ActAddDeviceDialog;
+import com.ndtlg.pettimenew.frg.DTitleAct;
 import com.ndtlg.pettimenew.frg.FrgAddDeviceNew;
+import com.ndtlg.pettimenew.frg.FrgAddDeviceNewDialog;
 import com.ndtlg.pettimenew.frg.FrgMySb;
 import com.ndtlg.pettimenew.model.ModelData;
 import com.ndtlg.pettimenew.model.ModelList;
@@ -73,7 +77,8 @@ public class Main extends BaseItem {
                     if (!F.isWifiConnect(context)) {
                         Helper.toast("此功能需连接wifi", context);
                     } else {
-                        Helper.startActivity(context, FrgAddDeviceNew.class, TitleAct.class);
+//                        Helper.startActivity(context, FrgAddDeviceNewDialog.class, DTitleAct.class);
+                        context.startActivity(new Intent(context, ActAddDeviceDialog.class));
                     }
                 } else {
                     Helper.startActivity(context, FrgMySb.class, TitleAct.class, "item", ((ModelList.DataBean.DeviceListBean) item.mList.get(0)));
@@ -87,7 +92,8 @@ public class Main extends BaseItem {
                     if (!F.isWifiConnect(context)) {
                         Helper.toast("此功能需连接wifi", context);
                     } else {
-                        Helper.startActivity(context, FrgAddDeviceNew.class, TitleAct.class);
+//                        Helper.startActivity(context, FrgAddDeviceNewDialog.class, DTitleAct.class);
+                        context.startActivity(new Intent(context, ActAddDeviceDialog.class));
                     }
                 } else {
                     Helper.startActivity(context, FrgMySb.class, TitleAct.class, "item", ((ModelList.DataBean.DeviceListBean) item.mList.get(1)));
@@ -113,7 +119,7 @@ public class Main extends BaseItem {
     void goChange(TextView mTextView, ImageView mImageView, ModelList.DataBean.DeviceListBean mMPhoto) {
         if (TextUtils.isEmpty(mMPhoto.id)) {
             mTextView.setText("添加");
-            mImageView.setImageResource(R.drawable.add);
+            mImageView.setImageResource(R.drawable.ic_tinajiashebei);
         } else {
             mTextView.setText(mMPhoto.devicenick);
             mImageView.setImageResource(R.drawable.icon);

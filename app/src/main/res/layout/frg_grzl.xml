@@ -28,6 +28,7 @@
             style="@style/text_style_15_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="4"
             android:text="头像" />
 
@@ -60,6 +61,7 @@
             style="@style/text_style_15_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="4"
             android:text="昵称" />
 
@@ -69,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/j10dp"
-            android:layout_weight="1"
+            android:drawablePadding="@dimen/j10dp"
             android:drawableRight="@drawable/gengduo"
             android:text="昵称" />
     </LinearLayout>
@@ -96,6 +98,7 @@
             style="@style/text_style_15_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="4"
             android:text="性别" />
 
@@ -105,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/j10dp"
-            android:layout_weight="1"
+            android:drawablePadding="@dimen/j10dp"
             android:drawableRight="@drawable/gengduo"
             android:text="男" />
     </LinearLayout>
@@ -131,6 +134,7 @@
             style="@style/text_style_15_black"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:ems="4"
             android:text="个性签名" />
 
@@ -140,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/j10dp"
-            android:layout_weight="1"
+            android:drawablePadding="@dimen/j10dp"
             android:drawableRight="@drawable/gengduo"
             android:text="" />
     </LinearLayout>

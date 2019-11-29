@@ -4,13 +4,14 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,7 +29,6 @@ import com.framewidget.R;
 import com.framewidget.newMenu.DfRadioGroup.DfCallback;
 import com.framewidget.newMenu.SlidingMenu.OnCloseListener;
 import com.framewidget.newMenu.SlidingMenu.OnOpenListener;
-import com.mdx.framework.Frame;
 import com.mdx.framework.activity.MFragment;
 
 import java.util.ArrayList;
@@ -66,14 +66,14 @@ public class SlidingFragment extends MFragment implements OnPageChangeListener,
     protected RelativeLayout mRelativeLayout_bottom;
     protected Object mMActivity;
     protected boolean isTrue = true;
-    protected boolean isCanPage = false;
+    protected boolean isCanPage = true;
     protected int resource = -1;
     protected float fadeDegree = 0;
     protected int OffscreenPageLimit;
     protected OnOpenListener mOnOpenListener;
     protected OnCloseListener mOnCloseListener;
     protected int direction = 0;// 0下1上
-    Typeface font = Typeface.createFromAsset(Frame.CONTEXT.getAssets(), "fontawesome-webfont.ttf");
+
     public int getOffscreenPageLimit() {
         return OffscreenPageLimit;
     }
@@ -112,7 +112,6 @@ public class SlidingFragment extends MFragment implements OnPageChangeListener,
 
     @SuppressLint("NewApi")
     private void setData() {
-
         if (fragments.size() > 0 && isTrue) {
             WindowManager wm = (WindowManager) getContext().getSystemService(
                     Context.WINDOW_SERVICE);
@@ -128,15 +127,20 @@ public class SlidingFragment extends MFragment implements OnPageChangeListener,
                     mRadioButton = (RadioButton) LayoutInflater.from(
                             getActivity()).inflate(R.layout.item_radio, null);
                 }
-                mRadioButton. setTypeface(font);
                 mRadioButton.setId(i);
                 if (mtexts.containsKey(i)) {
                     mRadioButton.setText(mtexts.get(i));
                 }
-//                if (mres.containsKey(i)) {
-//                    mRadioButton.setCompoundDrawablesWithIntrinsicBounds(0,
-//                            mres.get(i), 0, 0);
-//                }
+                if (mres.containsKey(i)) {
+                    mRadioButton.setCompoundDrawablesWithIntrinsicBounds(0,
+                            mres.get(i), 0, 0);
+                }
+                if (mres_drawable.containsKey(i)) {
+                    mres_drawable.get(i).setBounds(0, 0, mres_drawable.get(i).getIntrinsicWidth(), (int) (mres_drawable.get(i).getMinimumHeight()));
+                    mRadioButton.setCompoundDrawables(null,
+                            mres_drawable.get(i), null, null);
+                    mRadioButton.setTextColor(createColorStateList());
+                }
 
                 if (mOnClickListeners.containsKey(i)) {
                     mRadioButton.setOnClickListener(mOnClickListeners.get(i));
@@ -154,6 +158,15 @@ public class SlidingFragment extends MFragment implements OnPageChangeListener,
                     ((TextView) mLinearLayout_son
                             .findViewById(R.id.mTextView_dian))
                             .setVisibility(View.VISIBLE);
+                    if (!TextUtils.isEmpty(mDatas
+                            .get(i))) {
+                        LinearLayout.LayoutParams mLayoutParam = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.j17dp), (int) getResources().getDimension(R.dimen.j17dp));
+                        mLayoutParam.setMargins(0, 0, (int) getResources().getDimension(R.dimen.j5dp), 0);
+                        mLayoutParam.gravity = Gravity.CENTER;
+                        ((TextView) mLinearLayout_son
+                                .findViewById(R.id.mTextView_dian)).setLayoutParams(mLayoutParam);
+                    }
+
                     ((TextView) mLinearLayout_son
                             .findViewById(R.id.mTextView_dian)).setText(mDatas
                             .get(i));
@@ -271,6 +284,19 @@ public class SlidingFragment extends MFragment implements OnPageChangeListener,
      * 替换指定位置的右上角红点中的数值
      */
     public void replaceResDianCounts(int position, String text) {
+        if (TextUtils.isEmpty(text)) {
+            LinearLayout.LayoutParams mLayoutParam = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.j10dp), (int) getResources().getDimension(R.dimen.j10dp));
+            mLayoutParam.setMargins(0, 0, (int) getResources().getDimension(R.dimen.j17dp), 0);
+            mLayoutParam.gravity = Gravity.CENTER;
+            ((TextView) ((LinearLayout) mLinearLayout.getChildAt(position))
+                    .getChildAt(0)).setLayoutParams(mLayoutParam);
+        } else {
+            LinearLayout.LayoutParams mLayoutParam = new LinearLayout.LayoutParams((int) getResources().getDimension(R.dimen.j17dp), (int) getResources().getDimension(R.dimen.j17dp));
+            mLayoutParam.setMargins(0, 0, (int) getResources().getDimension(R.dimen.j5dp), 0);
+            mLayoutParam.gravity = Gravity.CENTER;
+            ((TextView) ((LinearLayout) mLinearLayout.getChildAt(position))
+                    .getChildAt(0)).setLayoutParams(mLayoutParam);
+        }
         ((TextView) ((LinearLayout) mLinearLayout.getChildAt(position))
                 .getChildAt(0)).setText(text);
     }

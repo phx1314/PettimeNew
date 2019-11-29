@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Base
     appid="appid"
-    baseuri="http://iot.myrabbit.vip"
+    baseuri="http://iot.qqcy.top"
     temppath="pet"
     updateuri=""
     usesdcard="true">

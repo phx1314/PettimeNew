@@ -47,6 +47,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.ndtlg.pettimenew.act.ActAddDeviceDialog"
+            android:screenOrientation="portrait"
+            android:theme="@style/dialog_style" />
         <!--<activity-->
         <!--android:name="com.framewidget.zxing.SimpleScannerActivity"-->
         <!--android:configChanges="orientation|keyboardHidden|screenSize"-->

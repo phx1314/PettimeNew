@@ -3,26 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_chongwubeijing"
     android:orientation="vertical">
 
     <TextView
         style="@style/text_style_17_black"
         android:layout_width="match_parent"
+        android:textColor="#264145"
         android:layout_height="48dip"
         android:gravity="center"
         android:text="我的设备" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="1px"
-        android:layout_alignParentBottom="true"
-        android:background="@color/tyD1" />
 
     <com.ndtlg.pettimenew.view.AbPullListView
         android:id="@+id/mAbPullListView"
         android:layout_width="match_parent"
+        android:layout_marginTop="@dimen/j100dp"
         android:layout_height="match_parent"
-        android:background="#fff"
         android:cacheColorHint="#00000000"
         android:divider="@null"
         android:fadingEdge="none"

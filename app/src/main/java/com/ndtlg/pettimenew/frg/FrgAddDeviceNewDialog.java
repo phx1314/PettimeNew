@@ -28,7 +28,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mdx.framework.Frame;
 import com.mdx.framework.utility.Helper;
@@ -37,35 +36,36 @@ import com.ndtlg.pettimenew.F;
 import com.ndtlg.pettimenew.R;
 import com.ndtlg.pettimenew.bean.BeanMBindDevice;
 import com.ndtlg.pettimenew.bean.BeanMGetDeviceStatus;
-import com.ndtlg.pettimenew.bean.BeanSocket;
+import com.ndtlg.pettimenew.model.ModelC;
 import com.ndtlg.pettimenew.model.ModelMGetDeviceStatus;
-import com.ndtlg.pettimenew.model.ModelSocket;
-import com.ndtlg.pettimenew.view.Callback;
-import com.ndtlg.pettimenew.view.SocThread;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.StringReader;
 
 import static com.ndtlg.pettimenew.F.MBindDevice;
 import static com.ndtlg.pettimenew.F.MGetDeviceStatus;
 import static com.ndtlg.pettimenew.F.json2Model;
-import static com.ndtlg.pettimenew.F.uid;
 
 
-public class FrgAddDevice extends BaseFrg {
+public class FrgAddDeviceNewDialog extends BaseFrg {
 
     public TextView mTextView_name;
     public EditText mEditText;
     public TextView mTextView_sure;
     public String ssid;
     public ProgressDialog mProgressDialog;
-    public SocThread mSocThread;
     public boolean hasdata = false;
-    public boolean getSocketData = false;
-    public Callback mCallback;
     public Handler mHandler = new Handler();
     public Runnable mRunnable;
     public Handler mHandler1 = new Handler();
     public Runnable mRunnable1;
-    public ModelSocket mModelSocket;
     public ScrollView mScrollView;
+    public String url = "http://192.168.4.1/";
+    public String url_post = "http://192.168.4.1/wifisave";
+    public String IotId;
+    public TextView mTextView_cancle;
 
     @Override
     protected void create(Bundle savedInstanceState) {
@@ -78,7 +78,7 @@ public class FrgAddDevice extends BaseFrg {
                 finish();
             }
         }
-        setContentView(R.layout.frg_add_device);
+        setContentView(R.layout.frg_add_device_dialog);
         initView();
         loaddata();
 
@@ -105,7 +105,7 @@ public class FrgAddDevice extends BaseFrg {
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
-                                    loadUrl(MBindDevice, new BeanMBindDevice(mModelSocket.IOTID, et.getText().toString()));
+                                    loadUrl(MBindDevice, new BeanMBindDevice(IotId, et.getText().toString()));
                                 }
                             }).setCancelable(false).setNegativeButton("取消", null).show();
                 } else {
@@ -115,6 +115,10 @@ public class FrgAddDevice extends BaseFrg {
                 e.printStackTrace();
             }
 
+        } else if (methodName.equals(url)) {
+            parseXMLWithPull(content);
+        } else if (methodName.equals(url_post)) {
+            Helper.toast("发送数据成功", getContext());
         }
     }
 
@@ -127,36 +131,17 @@ public class FrgAddDevice extends BaseFrg {
         mEditText = (EditText) findViewById(R.id.mEditText);
         mTextView_sure = (TextView) findViewById(R.id.mTextView_sure);
         mScrollView = (ScrollView) findViewById(R.id.mScrollView);
-        mTextView_sure.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (TextUtils.isEmpty(mEditText.getText().toString())) {
-                    Helper.toast("请输入wifi密码", getContext());
-                    return;
-                }
-                mHandler1.postDelayed(mRunnable1, 1000);
-                mScrollView.setVisibility(View.VISIBLE);
+        mTextView_cancle = (TextView) findViewById(R.id.mTextView_cancle);
+        mTextView_sure.setOnClickListener(v -> {
+            if (TextUtils.isEmpty(mEditText.getText().toString())) {
+                Helper.toast("请输入wifi密码", getContext());
+                return;
+            }
+            mHandler1.postDelayed(mRunnable1, 1000);
+            mScrollView.setVisibility(View.VISIBLE);
 
-            }
         });
-        mCallback = new Callback() {
-            @Override
-            public void goBack(String json) {
-                try {
-                    if (getSocketData) return;
-                    if (!TextUtils.isEmpty(json.trim()) && json.contains("{")) {
-                        mSocThread.close();
-                        Toast.makeText(getContext(), json, 0).show();
-                        getSocketData = true;
-                        mProgressDialog.setMessage("等待设备联网...");
-                        mModelSocket = (ModelSocket) F.json2Model(json, ModelSocket.class);
-                        mHandler.postDelayed(mRunnable, 200);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        };
+        mTextView_cancle.setOnClickListener(v -> finish());
     }
 
     public void loaddata() {
@@ -165,14 +150,14 @@ public class FrgAddDevice extends BaseFrg {
         mTextView_name.setText(ssid);
 
         mProgressDialog = new ProgressDialog(getContext());
-        mProgressDialog.setMessage("设备连接中...");
+        mProgressDialog.setMessage("等待设备联网...");
         mProgressDialog.setCancelable(false);
 
         mRunnable = new Runnable() {
             @Override
             public void run() {
                 if (!hasdata) {
-                    loadUrlNs(MGetDeviceStatus, new BeanMGetDeviceStatus(mModelSocket.IOTID));
+                    loadUrlNs(MGetDeviceStatus, new BeanMGetDeviceStatus(IotId));
                     mHandler.postDelayed(mRunnable, 6000);
                 }
             }
@@ -186,14 +171,7 @@ public class FrgAddDevice extends BaseFrg {
                         WifiManager wifimanager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                         ssid = wifimanager.getConnectionInfo().getSSID().replace("\"", "");
                         if (ssid.startsWith("pettime_") && F.isWifiConnect(getContext()) && F.isAppOnForeground(getContext())) {
-                            if (mSocThread != null) {
-                                mSocThread.close();
-                                mSocThread = null;
-                            }
-                            if (!mProgressDialog.isShowing())
-                                mProgressDialog.show();
-                            mSocThread = new SocThread(getContext(), mCallback, new BeanSocket(mTextView_name.getText().toString(), mEditText.getText().toString(), uid));
-                            mSocThread.start();
+                            loadUrl(url, null);
                         } else {
                             mHandler1.postDelayed(mRunnable1, 1000);
                             Log.i("数据wifi", ssid);
@@ -215,13 +193,54 @@ public class FrgAddDevice extends BaseFrg {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mSocThread != null) {
-            mSocThread.close();
-            mSocThread = null;
-        }
+
         try {
             mHandler.removeCallbacks(mRunnable);
             mHandler1.removeCallbacks(mRunnable1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //用Pull方式解析XML
+    private void parseXMLWithPull(String xmlData) {
+        try {
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser xmlPullParser = factory.newPullParser();
+            //设置输入的内容
+            xmlPullParser.setInput(new StringReader(xmlData));
+            //获取当前解析事件，返回的是数字
+            int eventType = xmlPullParser.getEventType();
+
+            while (eventType != (XmlPullParser.END_DOCUMENT)) {
+                String nodeName = xmlPullParser.getName();
+                switch (eventType) {
+                    //开始解析XML
+                    case XmlPullParser.START_TAG: {
+                        //nextText()用于获取结点内的具体内容
+                        if ("h4".equals(nodeName)) {
+                            String id = xmlPullParser.nextText();
+                            if (id.startsWith("IotId")) {
+                                IotId = id.split(":")[1].trim();
+//                                Helper.toast(IotId,getContext());
+                                loadUrlPost(url_post, new ModelC(mTextView_name.getText().toString(), mEditText.getText().toString()));
+                                mProgressDialog.show();
+                                mHandler.postDelayed(mRunnable, 200);
+                            }
+                        }
+                    }
+                    break;
+                    //结束解析
+                    case XmlPullParser.END_TAG: {
+
+                    }
+                    break;
+                    default:
+                        break;
+                }
+                //下一个
+                eventType = xmlPullParser.next();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
