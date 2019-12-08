@@ -25,14 +25,12 @@ import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.EditText;
-
 
 import com.mdx.framework.Frame;
 import com.mdx.framework.utility.Helper;
-import com.mdx.framework.widget.ActionBar;
 import com.ndtlg.pettimenew.F;
 import com.ndtlg.pettimenew.R;
 import com.ndtlg.pettimenew.bean.BeanMBindDevice;
@@ -170,7 +168,7 @@ public class ActAddDeviceDialog extends BaseAct{
                     public void run() {
                         WifiManager wifimanager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
                         ssid = wifimanager.getConnectionInfo().getSSID().replace("\"", "");
-                        if (ssid.startsWith("pettime_") && F.isWifiConnect(getContext()) && F.isAppOnForeground(getContext())) {
+                        if (ssid.startsWith("QQCY-") && F.isWifiConnect(getContext()) && F.isAppOnForeground(getContext())) {
                             loadUrl(url, null);
                         } else {
                             mHandler1.postDelayed(mRunnable1, 1000);

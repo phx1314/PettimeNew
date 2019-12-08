@@ -104,6 +104,7 @@
                         android:id="@+id/mImageView_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/j15dp"
                         android:src="@drawable/change_blue" />
@@ -182,8 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/j5dp"
                     android:gravity="center"
-                    android:text="烘箱模式"
-                    android:visibility="gone" />
+                    android:text="猫舍" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -435,8 +435,8 @@
         android:id="@+id/mImageView_zc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#80ffffff"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        android:background="#80ffffff" />
 </RelativeLayout>
 

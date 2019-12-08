@@ -314,7 +314,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
                         mModelAlData.workmode = mModelAlData.workmode.equals("4") ? "1" : "4";
                         sendDRF(mModelAlData);
                     } else {
-                        com.framewidget.F.yShoure(getContext(), "", "即将进入消毒模式,请将宠物移出烘箱！以免发生意外！", new DialogInterface.OnClickListener() {
+                        com.framewidget.F.yShoure(getContext(), "", "即将进入消毒模式,请将宠物移出猫舍！以免发生意外！", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 mModelAlData.workmode = mModelAlData.workmode.equals("4") ? "1" : "4";
@@ -476,7 +476,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
     }
 
     public void sendDRF(Object obj) {
-        sendD(obj, "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/update");
+        sendD(obj, "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/update");
         mModelAlData = null;
         mImageView_zc.setVisibility(View.VISIBLE);
         mProgressBar.setEnabled(false);
@@ -512,7 +512,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
 
 
     public void loaddata() {
-        sendD(new BeanGet(item.devicename, item.userid, "get"), "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/update");
+        sendD(new BeanGet(item.devicename, item.userid, "get"), "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/update");
 //        loadUrl(MGetDeviceStatus, new BeanMGetDeviceStatus(item.iotid));
 
         mRunnable = new Runnable() {

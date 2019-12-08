@@ -54,7 +54,7 @@ import static com.ndtlg.pettimenew.F.wxqqid;
 
 
 public class FrgLogin extends BaseFrg {
-
+//    18661240278   1111111
     public RadioGroup mRadioGroup_bg;
     public RadioButton mRadioButton_dl;
     public RadioButton mRadioButton_zc;

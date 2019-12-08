@@ -262,7 +262,7 @@ public class FrgWd extends BaseFrg implements IConnectNotifyListener {
 
     public void subTopic() {// 订阅
         MqttSubscribeRequest subscribeRequest = new MqttSubscribeRequest();
-        subscribeRequest.topic = "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/get";
+        subscribeRequest.topic = "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/get";
         subscribeRequest.isSubscribe = true;
         LinkKit.getInstance().subscribe(subscribeRequest, new IConnectSubscribeListener() {
             @Override
@@ -343,9 +343,9 @@ public class FrgWd extends BaseFrg implements IConnectNotifyListener {
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
         LinkKit.getInstance().unRegisterOnPushListener(this);
         LinkKit.getInstance().deinit();
+        super.onDestroy();
     }
 
     @Override

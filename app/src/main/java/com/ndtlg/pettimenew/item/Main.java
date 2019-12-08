@@ -27,9 +27,6 @@ import com.mdx.framework.utility.Helper;
 import com.ndtlg.pettimenew.F;
 import com.ndtlg.pettimenew.R;
 import com.ndtlg.pettimenew.act.ActAddDeviceDialog;
-import com.ndtlg.pettimenew.frg.DTitleAct;
-import com.ndtlg.pettimenew.frg.FrgAddDeviceNew;
-import com.ndtlg.pettimenew.frg.FrgAddDeviceNewDialog;
 import com.ndtlg.pettimenew.frg.FrgMySb;
 import com.ndtlg.pettimenew.model.ModelData;
 import com.ndtlg.pettimenew.model.ModelList;
@@ -122,7 +119,7 @@ public class Main extends BaseItem {
             mImageView.setImageResource(R.drawable.ic_tinajiashebei);
         } else {
             mTextView.setText(mMPhoto.devicenick);
-            mImageView.setImageResource(R.drawable.icon);
+            mImageView.setImageResource(R.drawable.ic_maolongyihao);
         }
 
     }
