@@ -104,17 +104,18 @@
                         android:id="@+id/mImageView_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:visibility="gone"
                         android:layout_alignParentRight="true"
                         android:layout_margin="@dimen/j15dp"
-                        android:src="@drawable/change_blue" />
+                        android:src="@drawable/change_blue"
+                        android:visibility="gone" />
                 </RelativeLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/mImageView_del"
@@ -163,7 +164,8 @@
                     android:layout_marginRight="@dimen/j10dp"
                     android:layout_marginTop="@dimen/j8dp"
                     android:max="100"
-                    android:thumb="@drawable/close_07" />
+                    android:thumb="@drawable/close_07"
+                    android:visibility="gone" />
 
                 <SeekBar
                     android:id="@+id/mProgressBar_nv"
@@ -174,7 +176,8 @@
                     android:layout_marginRight="@dimen/j10dp"
                     android:layout_marginTop="@dimen/j8dp"
                     android:max="100"
-                    android:thumb="@drawable/close_07_red" />
+                    android:thumb="@drawable/close_07_red"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/mTextView_hx"
@@ -190,13 +193,67 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/j8dp"
                     android:orientation="horizontal"
-                    android:paddingLeft="@dimen/j25dp"
-                    android:paddingRight="@dimen/j25dp">
+                     >
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mTextView_jr"
+                            style="@style/text_style_15_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/j5dp"
+                            android:drawableTop="@drawable/heat"
+                            android:gravity="center"
+                            android:text="加热" />
+
+                        <TextView
+                            android:id="@+id/mTextView_hgcao"
+                            style="@style/text_style_13_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j8dp"
+                            android:background="@drawable/shape_blue"
+                            android:padding="@dimen/j5dp"
+                            android:text="ON" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/mTextView_jr"
+                            style="@style/text_style_15_black"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:drawablePadding="@dimen/j5dp"
+                            android:drawableTop="@drawable/heat"
+                            android:gravity="center"
+                            android:text="加热" />
+
+                        <TextView
+                            android:id="@+id/mTextView_hgcao"
+                            style="@style/text_style_13_white"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/j8dp"
+                            android:background="@drawable/shape_blue"
+                            android:padding="@dimen/j5dp"
+                            android:text="ON" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <TextView
@@ -220,10 +277,6 @@
                             android:text="ON" />
                     </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
