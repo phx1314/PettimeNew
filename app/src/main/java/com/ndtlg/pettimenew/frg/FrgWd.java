@@ -354,7 +354,6 @@ public class FrgWd extends BaseFrg implements IConnectNotifyListener {
         String content = new String((byte[]) aMessage.getData());
         Log.i("阿里数据", content);
         Frame.HANDLES.sentAll("FrgMySb", 0, content);
-        Frame.HANDLES.sentAll("FrgAddDevice", 0, content);
     }
 
     @Override

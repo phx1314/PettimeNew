@@ -48,6 +48,9 @@ import com.ndtlg.pettimenew.model.ModelList;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static com.ndtlg.pettimenew.F.MUnBindDevice;
 import static com.ndtlg.pettimenew.frg.FrgWd.mModelMgetUserInfo;
@@ -58,44 +61,29 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
     public LinearLayout mLinearLayout1;
     public TextView mTextView1;
     public TextView mTextView2;
-    public TextView mTextView3;
-    public SeekBar mProgressBar;
     public TextView mTextView_hx;
-    public TextView mTextView_jr;
-    public TextView mTextView_sj;
     public TextView mTextView_version;
-    public LinearLayout mRelativeLayout;
-    public LinearLayout mLinearLayout_gg;
-    public TextView mTextView_1;
     public TextView mTextView_lnw;
     public ModelList.DataBean.DeviceListBean item;
-    public ImageView mImageView_change;
-    public ImageView mImageView_del;
-    public ImageView mImageView_add;
-    public ImageView mImageView_change2;
     public ModelAlData mModelAlData;
     public TextView mTextView_update;
-    public Handler mHandler = new Handler();
     public Runnable mRunnable;
     public String data;
-    public TextView mTextView_2;
-    public SeekBar mProgressBar2;
     public Typeface font = Typeface.createFromAsset(Frame.CONTEXT.getAssets(), "Futura.ttf");
     public LinearLayout mLinearLayout_cnm;
-    public SeekBar mProgressBar_nv;
-    public SeekBar mProgressBar2_nv;
     public ImageView mImageView_zc;
     public boolean fromUser;
     public ProgressDialog mProgressDialog;
     public ImageView mImageView_left;
     public ImageView mImageView_right;
-    public TextView mTextView_hgcao;
-    public TextView mTextView_xdcao;
-    public ImageView mImageView_left2;
-    public ImageView mImageView_right2;
-    public TextView mTextView_zmcao;
-    public TextView mTextView_lnw2;
-
+    public TextView mTextView_xd;
+    public TextView mTextView_xd_cao;
+    public TextView mTextView_zm_cao;
+    public TextView mTextView_hw;
+    public TextView mTextView_hw_cao;
+    public TextView mTextView_hq;
+    public TextView mTextView_hq_cao;
+    public ScheduledExecutorService mScheduledExecutorService;
     @Override
     protected void create(Bundle savedInstanceState) {
         item = (ModelList.DataBean.DeviceListBean) getActivity().getIntent().getSerializableExtra("item");
@@ -118,10 +106,12 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
                     mModelAlData.deviceName = item.devicename;
                     mModelAlData.deviceID = item.userid;
                     refshUI();
+                } else {
+                    Log.i("获取到数据,但是不匹配", obj.toString());
                 }
                 break;
             case 1:
-                mModelAlData.time.set = mModelAlData.time.remain = obj.toString();
+//                mModelAlData.time.set = mModelAlData.time.remain = obj.toString();
                 refshUI();
                 break;
             case 2:
@@ -141,98 +131,23 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
         mLinearLayout1 = (LinearLayout) findViewById(R.id.mLinearLayout1);
         mTextView1 = (TextView) findViewById(R.id.mTextView1);
         mTextView2 = (TextView) findViewById(R.id.mTextView2);
-        mTextView3 = (TextView) findViewById(R.id.mTextView3);
-        mProgressBar = (SeekBar) findViewById(R.id.mProgressBar);
         mTextView_hx = (TextView) findViewById(R.id.mTextView_hx);
-        mTextView_jr = (TextView) findViewById(R.id.mTextView_jr);
-        mTextView_sj = (TextView) findViewById(R.id.mTextView_sj);
         mTextView_version = (TextView) findViewById(R.id.mTextView_version);
-        mRelativeLayout = (LinearLayout) findViewById(R.id.mRelativeLayout);
-        mLinearLayout_gg = (LinearLayout) findViewById(R.id.mLinearLayout_gg);
-        mTextView_1 = (TextView) findViewById(R.id.mTextView_1);
         mTextView_lnw = (TextView) findViewById(R.id.mTextView_lnw);
-        mImageView_change = (ImageView) findViewById(R.id.mImageView_change);
-        mImageView_del = (ImageView) findViewById(R.id.mImageView_del);
-        mImageView_add = (ImageView) findViewById(R.id.mImageView_add);
-        mImageView_change2 = (ImageView) findViewById(R.id.mImageView_change2);
         mTextView_update = (TextView) findViewById(R.id.mTextView_update);
-        mTextView_2 = (TextView) findViewById(R.id.mTextView_2);
-        mProgressBar2 = (SeekBar) findViewById(R.id.mProgressBar2);
         mLinearLayout_cnm = (LinearLayout) findViewById(R.id.mLinearLayout_cnm);
-        mProgressBar_nv = (SeekBar) findViewById(R.id.mProgressBar_nv);
-        mProgressBar2_nv = (SeekBar) findViewById(R.id.mProgressBar2_nv);
         mImageView_zc = (ImageView) findViewById(R.id.mImageView_zc);
         mImageView_left = (ImageView) findViewById(R.id.mImageView_left);
         mImageView_right = (ImageView) findViewById(R.id.mImageView_right);
-        mTextView_hgcao = (TextView) findViewById(R.id.mTextView_hgcao);
-        mTextView_xdcao = (TextView) findViewById(R.id.mTextView_xdcao);
-        mImageView_left2 = (ImageView) findViewById(R.id.mImageView_left2);
-        mImageView_right2 = (ImageView) findViewById(R.id.mImageView_right2);
-        mTextView_zmcao = (TextView) findViewById(R.id.mTextView_zmcao);
-        mTextView_lnw2 = (TextView) findViewById(R.id.mTextView_lnw2);
-        mTextView3.setTypeface(font);
+        mTextView_xd = (TextView) findViewById(R.id.mTextView_xd);
+        mTextView_xd_cao = (TextView) findViewById(R.id.mTextView_xd_cao);
+        mTextView_zm_cao = (TextView) findViewById(R.id.mTextView_zm_cao);
+        mTextView_hw = (TextView) findViewById(R.id.mTextView_hw);
+        mTextView_hw_cao = (TextView) findViewById(R.id.mTextView_hw_cao);
+        mTextView_hq = (TextView) findViewById(R.id.mTextView_hq);
+        mTextView_hq_cao = (TextView) findViewById(R.id.mTextView_hq_cao);
         mTextView2.setTypeface(font);
-        mTextView_2.setTypeface(font);
-        mTextView_1.setTypeface(font);
-        mProgressBar.setEnabled(false);
-        mProgressBar2.setEnabled(false);
-        mProgressBar_nv.setEnabled(false);
-        mProgressBar2_nv.setEnabled(false);
-        mImageView_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0") && Integer.valueOf(mModelAlData.time.remain) < 99) {
-                    if (mModelAlData.workmode.equals("2")) {
-                        Helper.toast("正在加热，无法设置时间", getContext());
-                        return;
-                    }
-                    mModelAlData.time.set = mModelAlData.time.remain = (Integer.valueOf(mModelAlData.time.remain) + 1) + "";
-                    refshUI();
-//                    sendDRF(mModelAlData);
-                }
-            }
-        });
-        mTextView3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    if (mModelAlData.workmode.equals("2")) {
-                        Helper.toast("正在加热，无法设置时间", getContext());
-                        return;
-                    }
-                    List<String> src = new ArrayList<>();
-                    for (int i = 99; i > 0; i--) {
-                        src.add(i + "");
-                    }
-                    Helper.startActivity(getContext(), FrgList.class, TitleAct.class, "from", "FrgMySb", "type", 1, "title", "请选择时间", "data", src);
-                }
-            }
-        });
-        mTextView_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-
-                    List<String> src = new ArrayList<>();
-                    for (int i = 40; i > 19; i--) {
-                        src.add(i + "");
-                    }
-                    Helper.startActivity(getContext(), FrgList.class, TitleAct.class, "from", "FrgMySb", "type", 2, "title", "请选择温度", "data", src);
-                }
-            }
-        });
         mImageView_left.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    if (Integer.valueOf(mModelAlData.temperature.set) > 20) {
-                        mModelAlData.temperature.set = (Integer.valueOf(mModelAlData.temperature.set) - 1) + "";
-                    }
-                    sendDRF(mModelAlData);
-                }
-            }
-        });
-        mImageView_left2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
@@ -254,103 +169,15 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
                 }
             }
         });
-        mImageView_right2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    if (Integer.valueOf(mModelAlData.temperature.set) < 40) {
-                        mModelAlData.temperature.set = (Integer.valueOf(mModelAlData.temperature.set) + 1) + "";
-                    }
-                    sendDRF(mModelAlData);
-                }
-            }
-        });
         mTextView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-
                     List<String> src = new ArrayList<>();
                     for (int i = 40; i > 19; i--) {
                         src.add(i + "");
                     }
                     Helper.startActivity(getContext(), FrgList.class, TitleAct.class, "from", "FrgMySb", "type", 2, "title", "请选择温度", "data", src);
-                }
-            }
-        });
-        mImageView_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0") && Integer.valueOf(mModelAlData.time.remain) > 1) {
-                    if (mModelAlData.workmode.equals("2")) {
-                        Helper.toast("正在加热，无法设置时间", getContext());
-                        return;
-                    }
-                    mModelAlData.time.set = mModelAlData.time.remain = (Integer.valueOf(mModelAlData.time.remain) - 1) + "";
-                    refshUI();
-//                    sendDRF(mModelAlData);
-                }
-            }
-        });
-        mTextView_jr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    if (mTextView3.getText().toString().equals("0")) {
-                        Helper.toast("请设置加热时间", getContext());
-                        return;
-                    }
-                    mModelAlData.workmode = mModelAlData.workmode.equals("2") ? "1" : "2";
-                    mModelAlData.time.set = mTextView3.getText().toString();
-                    sendDRF(mModelAlData);
-                }
-            }
-        });
-        mTextView_sj.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    if (mModelAlData.workmode.equals("4")) {
-                        mModelAlData.workmode = mModelAlData.workmode.equals("4") ? "1" : "4";
-                        sendDRF(mModelAlData);
-                    } else {
-                        com.framewidget.F.yShoure(getContext(), "", "即将进入消毒模式,请将宠物移出猫舍！以免发生意外！", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mModelAlData.workmode = mModelAlData.workmode.equals("4") ? "1" : "4";
-                                sendDRF(mModelAlData);
-                            }
-                        });
-                    }
-
-
-                }
-            }
-        });
-        mImageView_change.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    mModelAlData.workmode = "3";
-                    sendDRF(mModelAlData);
-                }
-            }
-        });
-        mImageView_change2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    mModelAlData.workmode = "1";
-                    sendDRF(mModelAlData);
-                }
-            }
-        });
-        mTextView_lnw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
-                    mModelAlData.light = mModelAlData.light.equals("0") ? "1" : "0";
-                    sendDRF(mModelAlData);
                 }
             }
         });
@@ -363,114 +190,96 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
                 }
             }
         });
-        mProgressBar.setOnSeekBarChangeListener(this);
-        mProgressBar2.setOnSeekBarChangeListener(this);
-        mProgressBar_nv.setOnSeekBarChangeListener(this);
-        mProgressBar2_nv.setOnSeekBarChangeListener(this);
+        mTextView_lnw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
+                    mModelAlData.light = mModelAlData.light.equals("0") ? "1" : "0";
+                    sendDRF(mModelAlData);
+                }
+            }
+        });
 
-        mTextView_lnw.setCompoundDrawablesWithIntrinsicBounds(0, mModelMgetUserInfo.data.sex == 2 ? R.drawable.open_red : R.drawable.open_blue, 0, 0);
-        mLinearLayout_cnm.setBackgroundResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.red : R.drawable.blue);
+        mTextView_hq.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
+                    mModelAlData.fan.speed = mModelAlData.fan.speed.equals("0") ? "1" : "0";
+                    sendDRF(mModelAlData);
+                }
+            }
+        });
+        mTextView_hw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0") && !TextUtils.isEmpty(mModelAlData.temperature.set)) {
+                    if (Integer.valueOf(mModelAlData.temperature.set) > 0) {
+                        mModelAlData.temperature.set = "-20";
+                    } else {
+                        mModelAlData.temperature.set = "20";
+                    }
+                    sendDRF(mModelAlData);
+                }
+            }
+        });
+        mTextView_xd.setOnClickListener(new View.OnClickListener() {//消毒
+            @Override
+            public void onClick(View v) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
+                    if (mModelAlData.time.set.equals("0")) {
+                        com.framewidget.F.yShoure(getContext(), "", "即将进入消毒模式,请将宠物移出猫舍！以免发生意外！", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mModelAlData.time.set = mModelAlData.time.set.equals("0") ? "1" : "0";
+                                sendDRF(mModelAlData);
+                            }
+                        });
+                    } else {
+                        mModelAlData.time.set = mModelAlData.time.set.equals("0") ? "1" : "0";
+                        sendDRF(mModelAlData);
+                    }
 
-        mImageView_change.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.change_red : R.drawable.change_blue);
-        mImageView_left.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.left_red : R.drawable.left );
-        mImageView_left2.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.left_red : R.drawable.left);
-        mImageView_right.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.right_red : R.drawable.right);
-        mImageView_right2.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.right_red : R.drawable.right);
-        mImageView_change2.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.change_red : R.drawable.change_blue);
-        if (mModelMgetUserInfo.data.sex == 2) {
-            mProgressBar_nv.setVisibility(View.VISIBLE);
-            mProgressBar2_nv.setVisibility(View.VISIBLE);
-            mProgressBar.setVisibility(View.GONE);
-            mProgressBar2.setVisibility(View.GONE);
-        } else {
-            mProgressBar_nv.setVisibility(View.GONE);
-            mProgressBar2_nv.setVisibility(View.GONE);
-            mProgressBar.setVisibility(View.VISIBLE);
-            mProgressBar2.setVisibility(View.VISIBLE);
-        }
+                }
+            }
+        });
+
+//        mLinearLayout_cnm.setBackgroundResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.red : R.drawable.blue);
+//
+//        mImageView_left.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.left_red : R.drawable.left);
+//        mImageView_right.setImageResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.right_red : R.drawable.right);
     }
 
     public void refshUI() {
-        mProgressBar.setEnabled(true);
-        mProgressBar2.setEnabled(true);
-        mProgressBar_nv.setEnabled(true);
-        mProgressBar2_nv.setEnabled(true);
         mImageView_zc.setVisibility(View.GONE);
         mTextView1.setText("当前温度:" + mModelAlData.temperature.current + "℃");
-        mTextView_1.setText("当前温度:" + mModelAlData.temperature.current + "℃");
         mTextView2.setText(mModelAlData.temperature.set + "℃");
-        mTextView_2.setText(mModelAlData.temperature.set + "℃");
-        mTextView3.setText(mModelAlData.time.remain);
-        mProgressBar.setProgress(Integer.valueOf(mModelAlData.fan.speed));
-        mProgressBar2.setProgress(Integer.valueOf(mModelAlData.fan.speed));
-        mProgressBar_nv.setProgress(Integer.valueOf(mModelAlData.fan.speed));
-        mProgressBar2_nv.setProgress(Integer.valueOf(mModelAlData.fan.speed));
-        if (item.version.equals(mModelAlData.version)) {
-            mTextView_update.setVisibility(View.GONE);
-        } else {
-            mTextView_update.setVisibility(View.VISIBLE);
-        }
         mTextView_version.setText(mModelAlData.version);
+        if (Integer.valueOf(mModelAlData.temperature.set) > 0) {
+            mTextView_hw.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_hengwen_h, 0, 0);
+        } else {
+            mTextView_hw.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_hengwen, 0, 0);
+        }
+        if (mModelAlData.time.set.equals("0")) {
+            mTextView_xd.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_xiaodu, 0, 0);
+        } else {
+            mTextView_xd.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_xiaodu_h, 0, 0);
+        }
+        if (mModelAlData.fan.speed.equals("0")) {
+            mTextView_hq.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_huanqi, 0, 0);
+        } else {
+            mTextView_hq.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_huanqi_h, 0, 0);
+        }
+        if (mModelAlData.light.equals("0")) {
+            mTextView_lnw.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.heat, 0, 0);
+        } else {
+            mTextView_lnw.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.heat_select_blue, 0, 0);
+        }
+
         if (mModelAlData.workmode.equals("0")) {//关机
             Helper.toast("该设备已关机", getContext());
             mImageView_zc.setVisibility(View.VISIBLE);
         } else if (mModelAlData.workmode.equals("1")) {
-            mTextView_jr.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.heat, 0, 0);
-            mTextView_hgcao.setText("OFF");
-            mTextView_hgcao.setBackgroundResource(R.drawable.shape_off);
-            mTextView_sj.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.sterilize, 0, 0);
-            mTextView_xdcao.setText("OFF");
-            mTextView_xdcao.setBackgroundResource(R.drawable.shape_off);
             mLinearLayout1.setVisibility(View.VISIBLE);
-            mRelativeLayout.setVisibility(View.GONE);
-        } else if (mModelAlData.workmode.equals("2")) {
-            mTextView_jr.setCompoundDrawablesWithIntrinsicBounds(0, mModelMgetUserInfo.data.sex == 2 ? R.drawable.heat_select_red : R.drawable.heat_select_blue, 0, 0);
-            mTextView_hgcao.setText("ON");
-            mTextView_hgcao.setBackgroundResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.shape_red : R.drawable.shape_blue);
-            mTextView_sj.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.sterilize, 0, 0);
-            mTextView_xdcao.setText("OFF");
-            mTextView_xdcao.setBackgroundResource(R.drawable.shape_off);
-            mLinearLayout1.setVisibility(View.VISIBLE);
-            mRelativeLayout.setVisibility(View.GONE);
-        } else if (mModelAlData.workmode.equals("3")) {//冷暖窝
-            mTextView_jr.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.heat, 0, 0);
-            mTextView_hgcao.setText("OFF");
-            mTextView_hgcao.setBackgroundResource(R.drawable.shape_off);
-            mTextView_sj.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.sterilize, 0, 0);
-            mTextView_xdcao.setText("OFF");
-            mTextView_xdcao.setBackgroundResource(R.drawable.shape_off);
-            mLinearLayout1.setVisibility(View.GONE);
-            mRelativeLayout.setVisibility(View.VISIBLE);
-            if (mModelAlData.light.equals("0")) {
-                mRelativeLayout.setBackgroundColor(Color.parseColor("#333333"));
-                mTextView_1.setTextColor(Color.parseColor("#ffffff"));
-                mTextView_2.setTextColor(Color.parseColor("#ffffff"));
-                mTextView_lnw.setTextColor(Color.parseColor("#ffffff"));
-                mTextView_zmcao.setText("OFF");
-                mTextView_zmcao.setBackgroundResource(R.drawable.shape_white);
-                mTextView_zmcao.setTextColor(mModelMgetUserInfo.data.sex == 2 ? Color.parseColor("#FC7683"):Color.parseColor("#5995DF"));
-                mLinearLayout_gg.setBackgroundResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.close_red : R.drawable.close_blue);
-//                mTextView_lnw.setCompoundDrawablesWithIntrinsicBounds(0, mModelMgetUserInfo.data.sex == 2 ? R.drawable.open_red : R.drawable.open_blue, 0, 0);
-            } else {
-                mRelativeLayout.setBackgroundColor(Color.parseColor("#ffffff"));
-                mTextView_1.setTextColor(Color.parseColor("#777777"));
-                mTextView_2.setTextColor(Color.parseColor("#777777"));
-                mTextView_lnw.setTextColor(Color.parseColor("#777777"));
-                mTextView_zmcao.setText("ON");
-                mTextView_zmcao.setBackgroundResource(R.drawable.shape_off);
-                mTextView_zmcao.setTextColor(Color.parseColor("#ffffff"));
-                mLinearLayout_gg.setBackgroundResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.red : R.drawable.blue);
-//                mTextView_lnw.setCompoundDrawablesWithIntrinsicBounds(0, mModelMgetUserInfo.data.sex == 2 ? R.drawable.open_red : R.drawable.open_blue, 0, 0);
-            }
-        } else if (mModelAlData.workmode.equals("4")) {
-            mTextView_jr.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.heat, 0, 0);
-            mTextView_hgcao.setText("OFF");
-            mTextView_hgcao.setBackgroundResource(R.drawable.shape_off);
-            mTextView_sj.setCompoundDrawablesWithIntrinsicBounds(0, mModelMgetUserInfo.data.sex == 2 ? R.drawable.sterilize_select_red : R.drawable.sterilize_select_blue, 0, 0);
-            mTextView_xdcao.setText("ON");
-            mTextView_xdcao.setBackgroundResource(mModelMgetUserInfo.data.sex == 2 ? R.drawable.shape_red : R.drawable.shape_blue);
-            mLinearLayout1.setVisibility(View.VISIBLE);
-            mRelativeLayout.setVisibility(View.GONE);
         }
 
     }
@@ -479,12 +288,6 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
         sendD(obj, "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/update");
         mModelAlData = null;
         mImageView_zc.setVisibility(View.VISIBLE);
-        mProgressBar.setEnabled(false);
-        mProgressBar2.setEnabled(false);
-        mProgressBar_nv.setEnabled(false);
-        mProgressBar2_nv.setEnabled(false);
-//        mHandler.removeCallbacks(mRunnable);
-//        mHandler.postDelayed(mRunnable, 5000);
 
     }
 
@@ -512,7 +315,14 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
 
 
     public void loaddata() {
-        sendD(new BeanGet(item.devicename, item.userid, "get"), "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/update");
+        mScheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+        mScheduledExecutorService.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                sendD(new BeanGet(item.devicename, item.userid, "get"), "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/update");
+            }
+        }, 0, 4, TimeUnit.SECONDS);
+
 //        loadUrl(MGetDeviceStatus, new BeanMGetDeviceStatus(item.iotid));
 
         mRunnable = new Runnable() {
@@ -568,5 +378,11 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
             sendDRF(mModelAlData);
         }
 
+    }
+
+    @Override
+    public void onDestroy() {
+        mScheduledExecutorService.shutdown();
+        super.onDestroy();
     }
 }

@@ -8,16 +8,17 @@ import java.io.Serializable;
 
 public class ModelAlData implements Serializable {
 
+
     /**
-     * fan : {"speed":"20"}
-     * light : 1
-     * temperature : {"current":"19","set":"40"}
+     * fan : {"speed":"0"}
+     * light : 0
+     * temperature : {"current":"0","set":"-28"}
      * action : get
      * workmode : 1
-     * time : {"set":"99","remain":"99"}
-     * version : 1.1
-     * deviceName : c927bc2ea37e4a26a2034db71cff693e
-     * deviceID : MH00016C06A629
+     * time : {"set":"0"}
+     * version : 1.0.3
+     * deviceName : 8e89216214d6444d92b307a81cdd8d0c
+     * deviceID : 0d046bd90686fc75b8535d269abce03c
      */
 
     public FanBean fan;
@@ -32,7 +33,7 @@ public class ModelAlData implements Serializable {
 
     public static class FanBean {
         /**
-         * speed : 20
+         * speed : 0
          */
 
         public String speed;
@@ -40,8 +41,8 @@ public class ModelAlData implements Serializable {
 
     public static class TemperatureBean {
         /**
-         * current : 19
-         * set : 40
+         * current : 0
+         * set : -28
          */
 
         public String current;
@@ -50,11 +51,9 @@ public class ModelAlData implements Serializable {
 
     public static class TimeBean {
         /**
-         * set : 99
-         * remain : 99
+         * set : 0
          */
 
         public String set;
-        public String remain;
     }
 }

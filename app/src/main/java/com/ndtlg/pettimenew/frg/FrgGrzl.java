@@ -25,9 +25,9 @@ import com.mdx.framework.config.BaseConfig;
 import com.mdx.framework.utility.Helper;
 import com.mdx.framework.widget.ActionBar;
 import com.mdx.framework.widget.MImageView;
+import com.ndtlg.pettimenew.R;
 import com.ndtlg.pettimenew.bean.BeanMUpdateUser;
 import com.ndtlg.pettimenew.bean.BeanMUploadFile;
-import com.ndtlg.pettimenew.R;
 import com.ndtlg.pettimenew.model.ModelHeader;
 
 import java.io.File;
