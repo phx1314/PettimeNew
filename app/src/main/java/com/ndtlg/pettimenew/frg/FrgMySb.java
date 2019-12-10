@@ -84,6 +84,8 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
     public TextView mTextView_hq;
     public TextView mTextView_hq_cao;
     public ScheduledExecutorService mScheduledExecutorService;
+    public boolean isHW;
+
     @Override
     protected void create(Bundle savedInstanceState) {
         item = (ModelList.DataBean.DeviceListBean) getActivity().getIntent().getSerializableExtra("item");
@@ -116,7 +118,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
                 break;
             case 2:
                 mModelAlData.temperature.set = obj.toString();
-                sendDRF(mModelAlData);
+                if (isHW) sendDRF(mModelAlData);
                 break;
         }
     }
@@ -150,7 +152,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
         mImageView_left.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0") && isHW) {
                     if (Integer.valueOf(mModelAlData.temperature.set) > 20) {
                         mModelAlData.temperature.set = (Integer.valueOf(mModelAlData.temperature.set) - 1) + "";
                     }
@@ -161,7 +163,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
         mImageView_right.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0") && isHW) {
                     if (Integer.valueOf(mModelAlData.temperature.set) < 40) {
                         mModelAlData.temperature.set = (Integer.valueOf(mModelAlData.temperature.set) + 1) + "";
                     }
@@ -172,7 +174,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
         mTextView2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mModelAlData != null && !mModelAlData.workmode.equals("0")) {
+                if (mModelAlData != null && !mModelAlData.workmode.equals("0") && isHW) {
                     List<String> src = new ArrayList<>();
                     for (int i = 40; i > 19; i--) {
                         src.add(i + "");
@@ -213,10 +215,10 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
             @Override
             public void onClick(View v) {
                 if (mModelAlData != null && !mModelAlData.workmode.equals("0") && !TextUtils.isEmpty(mModelAlData.temperature.set)) {
-                    if (Integer.valueOf(mModelAlData.temperature.set) > 0) {
-                        mModelAlData.temperature.set = "-20";
+                    if (isHW) {
+                        mModelAlData.temperature.set = "-" + Math.abs(Integer.valueOf(mModelAlData.temperature.set));
                     } else {
-                        mModelAlData.temperature.set = "20";
+                        mModelAlData.temperature.set = "" + Math.abs(Integer.valueOf(mModelAlData.temperature.set));
                     }
                     sendDRF(mModelAlData);
                 }
@@ -252,11 +254,13 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
     public void refshUI() {
         mImageView_zc.setVisibility(View.GONE);
         mTextView1.setText("当前温度:" + mModelAlData.temperature.current + "℃");
-        mTextView2.setText(mModelAlData.temperature.set + "℃");
+        mTextView2.setText(Math.abs(Integer.valueOf(mModelAlData.temperature.set)) + "℃");
         mTextView_version.setText(mModelAlData.version);
         if (Integer.valueOf(mModelAlData.temperature.set) > 0) {
+            isHW = true;
             mTextView_hw.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_hengwen_h, 0, 0);
         } else {
+            isHW = false;
             mTextView_hw.setCompoundDrawablesRelativeWithIntrinsicBounds(0, R.drawable.ic_hengwen, 0, 0);
         }
         if (mModelAlData.time.set.equals("0")) {
@@ -321,7 +325,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
             public void run() {
                 sendD(new BeanGet(item.devicename, item.userid, "get"), "/" + mModelMgetUserInfo.data.productKey + "/" + mModelMgetUserInfo.data.id + "/user/update");
             }
-        }, 0, 4, TimeUnit.SECONDS);
+        }, 0, 3, TimeUnit.SECONDS);
 
 //        loadUrl(MGetDeviceStatus, new BeanMGetDeviceStatus(item.iotid));
 
