@@ -164,7 +164,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
             @Override
             public void onClick(View v) {
                 if (mModelAlData != null && !mModelAlData.workmode.equals("0") && isHW) {
-                    if (Integer.valueOf(mModelAlData.temperature.set) < 40) {
+                    if (Integer.valueOf(mModelAlData.temperature.set) < 35) {
                         mModelAlData.temperature.set = (Integer.valueOf(mModelAlData.temperature.set) + 1) + "";
                     }
                     sendDRF(mModelAlData);
@@ -176,7 +176,7 @@ public class FrgMySb extends BaseFrg implements SeekBar.OnSeekBarChangeListener 
             public void onClick(View v) {
                 if (mModelAlData != null && !mModelAlData.workmode.equals("0") && isHW) {
                     List<String> src = new ArrayList<>();
-                    for (int i = 40; i > 19; i--) {
+                    for (int i = 35; i > 19; i--) {
                         src.add(i + "");
                     }
                     Helper.startActivity(getContext(), FrgList.class, TitleAct.class, "from", "FrgMySb", "type", 2, "title", "请选择温度", "data", src);

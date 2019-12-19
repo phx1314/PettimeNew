@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import com.framewidget.newMenu.SlidingFragment;
 import com.mdx.framework.activity.TitleAct;
 import com.mdx.framework.utility.Helper;
+import com.mdx.framework.utility.permissions.PermissionRequest;
 import com.ndtlg.pettimenew.F;
 import com.ndtlg.pettimenew.R;
 import com.pgyersdk.javabean.AppBean;
@@ -28,7 +29,7 @@ import com.pgyersdk.update.UpdateManagerListener;
 
 
 public class FrgHome extends BaseFrg {
-//    17501469845    666666
+    //    17501469845    666666
     public LinearLayout mLinearLayout_content;
     public SlidingFragment mSlidingFragment;
     public android.support.v4.app.FragmentManager fragmentManager;
@@ -40,38 +41,44 @@ public class FrgHome extends BaseFrg {
         setContentView(R.layout.frg_home);
         initView();
         loaddata();
-        PgyUpdateManager.register(getActivity(),
-                new UpdateManagerListener() {
-                    @Override
-                    public void onUpdateAvailable(final String result) {
-                        try { // 将新版本信息封装到AppBean中
-                            final AppBean appBean = getAppBeanFromString(result);
-                            new AlertDialog.Builder(getContext())
-                                    .setTitle("版本更新").setCancelable(false)
-                                    .setMessage("检查到新版本，是否更新")
-                                    .setNegativeButton(
-                                            "确定",
-                                            new DialogInterface.OnClickListener() {
+        Helper.requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionRequest() {
+            @Override
+            public void onGrant(String[] strings, int[] ints) {
+                PgyUpdateManager.register(getActivity(),
+                        new UpdateManagerListener() {
+                            @Override
+                            public void onUpdateAvailable(final String result) {
+                                try { // 将新版本信息封装到AppBean中
+                                    final AppBean appBean = getAppBeanFromString(result);
+                                    new AlertDialog.Builder(getContext())
+                                            .setTitle("版本更新").setCancelable(false)
+                                            .setMessage("检查到新版本，是否更新")
+                                            .setNegativeButton(
+                                                    "确定",
+                                                    new DialogInterface.OnClickListener() {
 
-                                                @Override
-                                                public void onClick(
-                                                        DialogInterface dialog,
-                                                        int which) {
-                                                    startDownloadTask(
-                                                            getActivity(),
-                                                            appBean.getDownloadURL());
-                                                }
-                                            }).show();
+                                                        @Override
+                                                        public void onClick(
+                                                                DialogInterface dialog,
+                                                                int which) {
+                                                            startDownloadTask(
+                                                                    getActivity(),
+                                                                    appBean.getDownloadURL());
+                                                        }
+                                                    }).show();
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
 
-                    @Override
-                    public void onNoUpdateAvailable() {
-                    }
-                });
+                            @Override
+                            public void onNoUpdateAvailable() {
+                            }
+                        });
+            }
+        });
     }
 
     @Override
@@ -103,7 +110,7 @@ public class FrgHome extends BaseFrg {
 
 //        mSlidingFragment.addContentView(new FrgMain(), getResources().getString(com.framewidget.R.string.fa_home), 0);
 //        mSlidingFragment.addContentView(new FrgWd(), getResources().getString(com.framewidget.R.string.fa_user), 0);
-        mSlidingFragment.addContentView(new FrgMain(),"首页", R.drawable.btn_checked_1);
+        mSlidingFragment.addContentView(new FrgMain(), "首页", R.drawable.btn_checked_1);
         mSlidingFragment.addContentView(new FrgWd(), "我的", R.drawable.btn_checked_2);
         mSlidingFragment.setOffscreenPageLimit(2);
 
